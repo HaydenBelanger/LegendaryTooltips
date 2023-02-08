@@ -24,6 +24,11 @@ import com.electronwill.nightconfig.core.Config;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.ModLoader;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
@@ -129,6 +134,7 @@ public class LegendaryTooltipsConfig
 
 		// Build the comment for manual borders.
 		StringBuilder selectorsComment = new StringBuilder(" Entry types:\n");
+		if (FMLEnvironment.dist == Dist.CLIENT && Minecraft.getInstance() != null && !ModLoader.isDataGenRunning()){
 		for (SelectorDocumentation doc : Selectors.selectorDocumentation())
 		{
 			selectorsComment.append("    ").append(doc.name()).append(" - ").append(doc.description());
@@ -146,6 +152,7 @@ public class LegendaryTooltipsConfig
 				}
 			}
 			selectorsComment.append("\n");
+		}
 		}
 
 		// Remove the final newline.
